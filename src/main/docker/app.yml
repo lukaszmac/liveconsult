@@ -1,0 +1,19 @@
+version: '2'
+services:
+    liveconsult-app:
+        image: liveconsult
+        environment:
+            - SPRING_PROFILES_ACTIVE=prod,swagger
+            - SPRING_DATASOURCE_URL=jdbc:mysql://liveconsult-mysql:3306/liveconsult?useUnicode=true&characterEncoding=utf8&useSSL=false
+            - JHIPSTER_SLEEP=10 # gives time for the database to boot before the application
+            - SPRING_DATA_ELASTICSEARCH_CLUSTER_NODES=liveconsult-elasticsearch:9300
+        ports:
+            - 8080:8080
+    liveconsult-mysql:
+        extends:
+            file: mysql.yml
+            service: liveconsult-mysql
+    liveconsult-elasticsearch:
+        extends:
+            file: elasticsearch.yml
+            service: liveconsult-elasticsearch
